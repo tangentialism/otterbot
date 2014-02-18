@@ -30,4 +30,8 @@ module.exports = (robot) ->
     if feeler == 'robot' || feeler == 'otterbot'
       msg.reply "Just like a robot should."
     if peeps[feeler]
-      msg.reply "Last I heard, #{msg.match[2]} felt #{peeps[feeler]}"
+      if msg.match[2].toLowerCase() == 'i'
+        addressee = 'you'
+      else
+        addressee = msg.match[2]
+      msg.reply "Last I heard, #{addressee} felt #{peeps[feeler]}"
