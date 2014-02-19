@@ -37,14 +37,13 @@ benedicts = [
     "BARNDOOR"
     "BENELUX"
     "BEERBELLY"
-    "BARACKOBAMA"
     "BEECHNUT"
     "BEANCOUNTER"
-    "FLORENTINE"
-    "PRANAYAMA"
-    "BENS-A-DICK"
-    "BENEFITS"
     "BRANDYWITCH"
+    "BANDICOOT"
+    "BATTLESHIP"
+    "BUTTERSCOTCH"
+    "BLUNDERBUSS"
   ]
   
 cumberbatches = [
@@ -69,7 +68,7 @@ cumberbatches = [
     "STACKEXCHANGE"
     "CRUMBLECAKE"
     "DUMBLEDORE"
-    "MUMBLESNARK"
+    "CARROTCAKE"
   ]
   
 module.exports = (robot) ->
