@@ -106,7 +106,7 @@ module.exports = (robot) ->
   robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? otterbot/i, (msg) ->
     msg.reply msg.random hellos
   
-  robot.hear /^(bye|good evening|good night|g'night|night|nightie night),? otterbot/i, (msg) ->
+  robot.hear /^(bye|good evening|good night|goodnight|g'night|night|nightie night),? otterbot/i, (msg) ->
     msg.reply msg.random byes
     
   robot.hear /nielsen/i, (msg) ->
