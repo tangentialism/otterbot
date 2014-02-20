@@ -135,6 +135,13 @@ module.exports = (robot) ->
     if msg.match[1] == 'me'
       msg.reply "#{goodjob}."
     else
+      users = robot.brain.usersForFuzzyName(msg.match[1])
+      if users.length > 0
+        good_person = users[0]
+        if good_person.karma
+          good_person.karma += 1
+        else
+          good_person.karma = 1
       msg.send "#{goodjob}, #{msg.match[1]}"
 
   robot.respond /scold (.*)/i, (msg) ->
@@ -142,5 +149,22 @@ module.exports = (robot) ->
     if msg.match[1] == 'me'
       msg.reply "#{goodjob}."
     else
+      users = robot.brain.usersForFuzzyName(msg.match[1])
+      if users.length > 0
+        bad_person = users[0]
+        if good_person.karma
+          good_person.karma -= 1
+        else
+          good_person.karma = -1
       msg.send "#{goodjob}, #{msg.match[1]}"
-    
+
+  robot.respond /karma (.*)/i, (msg) ->
+    users = robot.brain.usersForFuzzyName(msg.match[1])
+    if users.length > 0
+      karma_person = users[0]
+      if karma_person.karma
+        karma = karma_person.karma
+      else
+        karma = 0
+        karma_person.karma = 0
+      msg.reply "#{karma_person.name} has #{karma} karma."
