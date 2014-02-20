@@ -15,23 +15,43 @@
 #   David Yee
 #
 
-peeps = {}
-
 module.exports = (robot) ->
-  robot.hear /I feel (.*)$/i, (msg) ->
+  robot.hear /I (?:am )?feel(?:ing)? (.*)$/i, (msg) ->
     howeyness = msg.match[1]
-    feeler = msg.message.user.name.split(' ')[0].toLowerCase()
-    peeps[feeler] = howeyness
+    user = robot.brain.userForId(msg.envelope.user.id)
+    user.feels = howeyness
 
   robot.respond /(how's|how is|how does|how do) (\w+) feel(?:ing)?$/i, (msg) ->
     feeler = msg.match[2].toLowerCase()
-    if feeler == 'i'
-      feeler = msg.message.user.name.split(' ')[0].toLowerCase()
-    if feeler == 'robot' || feeler == 'otterbot'
+    if feeler == "everybody" || feeler == "everyone"
+      console.log("shoulda been a contender")
+    else if feeler == 'i'
+      feeler = msg.message.user
+    else if feeler == 'robot' || feeler == 'otterbot'
       msg.reply "Just like a robot should."
-    if peeps[feeler]
+    else
+      users = robot.brain.usersForFuzzyName(feeler)
+      if users.length > 0
+        feeler = users[0]
+      else
+        msg.reply "I sense only a curious lack of feeling from #{feeler}."
+    if robot.brain.data.users[feeler.id]['feels']
+      da_feels = robot.brain.data.users[feeler.id].feels
       if msg.match[2].toLowerCase() == 'i'
         addressee = 'you'
       else
         addressee = msg.match[2]
-      msg.reply "Last I heard, #{addressee} felt #{peeps[feeler]}"
+      msg.reply "Last I heard, #{addressee} felt #{da_feels}"
+    else
+      msg.reply "I sense only a curious lack of feeling from #{addressee}."
+
+  robot.respond /(how's|how is|how does|how do) every(?:body|one) feel/i, (msg) ->
+    users = for id,user of (robot.brain.data.users or { })
+      user
+
+    if users.length > 0
+      msg.reply "People are feeling as follows:"
+      for user in users
+        msg.send "#{user.name} was feeling #{user.feels}"
+    else
+      msg.reply "Nobody feels anything, really. It's a total absence of feels."
