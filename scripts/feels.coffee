@@ -52,8 +52,8 @@ module.exports = (robot) ->
       user
 
     if users.length > 0
-      msg.reply "People are feeling as follows:"
       for user in users
-        msg.send "#{user.name} was feeling #{user.feels}"
+        if user.feels
+          msg.send "#{user.name} was feeling #{user.feels}"
     else
       msg.reply "Nobody feels anything, really. It's a total absence of feels."
