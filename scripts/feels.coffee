@@ -34,13 +34,15 @@ module.exports = (robot) ->
       if users.length > 0
         feeler = users[0]
       else
-        msg.reply "I sense only a curious lack of feeling from #{feeler}."
+        msg.reply "I sense a curious lack of feeling from #{feeler}."
+
+    if msg.match[2].toLowerCase() == 'i'
+      addressee = 'you'
+    else
+      addressee = msg.match[2]
+
     if robot.brain.data.users[feeler.id]['feels']
       da_feels = robot.brain.data.users[feeler.id].feels
-      if msg.match[2].toLowerCase() == 'i'
-        addressee = 'you'
-      else
-        addressee = msg.match[2]
       msg.reply "Last I heard, #{addressee} felt #{da_feels}"
     else
       msg.reply "I sense only a curious lack of feeling from #{addressee}."
