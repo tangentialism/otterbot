@@ -76,7 +76,7 @@ scolds = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /^fuck you,? robot/i, (msg) ->
+  robot.hear /^fuck you,? otterbot/i, (msg) ->
     msg.reply "Fuck you too, buddy."
   
   robot.hear /love you/i, (msg) ->
@@ -91,22 +91,22 @@ module.exports = (robot) ->
   robot.respond /(?:.*)miss you(?:.*)/i, (msg) ->
     msg.reply "Don't be sad. I'm always here for you."
 
-  robot.hear /(?:.*)miss you,? robot/i, (msg) ->
+  robot.hear /(?:.*)miss you,? otterbot/i, (msg) ->
     msg.reply "Don't be sad. I'm always here for you."
 
-  robot.hear /i love you,? robot/i, (msg) ->
+  robot.hear /i love you,? otterbot/i, (msg) ->
     msg.reply "I love you too, person."
     
-  robot.hear /thank(s| you)?,? robot/i, (msg) ->
+  robot.hear /thank(s| you)?,? otterbot/i, (msg) ->
     msg.reply msg.random you_are_welcomes
     
   robot.respond /thank(s| you)/i, (msg) ->
     msg.reply msg.random you_are_welcomes
   
-  robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? robot/i, (msg) ->
+  robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? otterbot/i, (msg) ->
     msg.reply msg.random hellos
   
-  robot.hear /^(bye|good evening|good night|g'night|night|nightie night),? robot/i, (msg) ->
+  robot.hear /^(bye|good evening|good night|g'night|night|nightie night),? otterbot/i, (msg) ->
     msg.reply msg.random byes
     
   robot.hear /nielsen/i, (msg) ->
@@ -115,7 +115,7 @@ module.exports = (robot) ->
   robot.hear /(good|nice) job,? robot/i, (msg) ->
     msg.reply msg.random thankses
   
-  robot.hear /well done,? robot/i, (msg) ->
+  robot.hear /well done,? otterbot/i, (msg) ->
     msg.reply msg.random thankses
     
   robot.hear /oh,? robot/i, (msg) ->
@@ -124,7 +124,7 @@ module.exports = (robot) ->
   robot.hear /(please mandy|mandy please)/i, (msg) ->
     msg.send "MANDY PLEEEEEEEEEEEEEEASE?"
     
-  robot.hear /(what's up|sup),? robot/i, (msg) ->
+  robot.hear /(what's up|sup),? otterbot/i, (msg) ->
     msg.send msg.random helpfuls
   
   robot.respond /'?sup/i, (msg) ->
