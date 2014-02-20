@@ -136,6 +136,11 @@ module.exports = (robot) ->
       msg.reply "#{goodjob}."
     else
       users = robot.brain.usersForFuzzyName(msg.match[1])
+      if users.length == 0
+        for id, user of robot.brain.data.users or { }
+          if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+            users = [user]
+            break
       if users.length > 0
         good_person = users[0]
         if good_person.karma
@@ -150,6 +155,11 @@ module.exports = (robot) ->
       msg.reply "#{goodjob}."
     else
       users = robot.brain.usersForFuzzyName(msg.match[1])
+      if users.length == 0
+        for id, user of robot.brain.data.users or { }
+          if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+            users = [user]
+            break
       if users.length > 0
         bad_person = users[0]
         if good_person.karma
@@ -158,8 +168,35 @@ module.exports = (robot) ->
           good_person.karma = -1
       msg.send "#{goodjob}, #{msg.match[1]}"
 
+  robot.respond /white pages/i, (msg) ->
+    names = robot.brain.data.users
+    # names correspond to users
+    for id, people of names
+      msg.send "#{people.name} is also known as #{people.nickname}."
+
+  robot.hear /(?:\")?(.*)(?:\")? aka (?:\")?(.*)(?:\")?/i, (msg) ->
+    users = robot.brain.usersForFuzzyName(msg.match[1])
+    if users.length > 0
+      users[0].nickname = msg.match[2]
+      msg.reply "Let it be known that #{users[0].name} shall also be known as #{msg.match[2]}."
+
+  robot.hear /i am known as (?:\")?(.*)(?:\")?/i, (msg) -> 
+    user = robot.brain.userForId(msg.envelope.user.id)
+    user.nickname = msg.match[1]
+    msg.reply "You are now."
+
+  robot.respond /what(?:\'s)?(?: is)? my nickname/i, (msg) ->
+    user = robot.brain.userForId(msg.envelope.user.id)
+    msg.reply "You are known as #{user.nickname or user.name}."
+
   robot.respond /karma (.*)/i, (msg) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
+    if users.length == 0
+      for id, user of robot.brain.data.users or { }
+        if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+          users = [user]
+          break
+
     if users.length > 0
       karma_person = users[0]
       if karma_person.karma
