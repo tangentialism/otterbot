@@ -79,7 +79,7 @@ module.exports = (robot) ->
   robot.hear /^fuck you,? otterbot/i, (msg) ->
     msg.reply "Fuck you too, buddy."
   
-  robot.hear /love you/i, (msg) ->
+  robot.hear /(love|heart) you/i, (msg) ->
     msg.reply "I love you <3"
 
   robot.respond /(.*)forever/i, (msg) -> 
@@ -147,6 +147,14 @@ module.exports = (robot) ->
           good_person.karma += 1
         else
           good_person.karma = 1
+      else
+        key = msg.match[1].replace /(\W+)/g, "_"
+        thingy_data = robot.brain.get("karma_#{key}") or { }
+        if thingy_data.karma
+          thingy_data.karma += 1
+        else
+          thingy_data.karma = 1
+        robot.brain.set("karma_#{key}", thingy_data)
       msg.send "#{goodjob}, #{msg.match[1]}"
 
   robot.respond /scold (.*)/i, (msg) ->
@@ -166,6 +174,14 @@ module.exports = (robot) ->
           good_person.karma -= 1
         else
           good_person.karma = -1
+      else
+        key = msg.match[1].replace /(\W+)/g, "_"
+        thingy_data = robot.brain.get("karma_#{key}") or { }
+        if thingy_data.karma
+          thingy_data.karma -= 1
+        else
+          thingy_data.karma = -1
+        robot.brain.set("karma_#{key}", thingy_data)
       msg.send "#{goodjob}, #{msg.match[1]}"
 
   robot.respond /white pages/i, (msg) ->
@@ -189,7 +205,24 @@ module.exports = (robot) ->
     user = robot.brain.userForId(msg.envelope.user.id)
     msg.reply "You are known as #{user.nickname or user.name}."
 
-  robot.respond /karma (.*)/i, (msg) ->
+  robot.respond /tell me about (.*)/i, (msg) ->
+    # is it a user
+    users = robot.brain.usersForFuzzyName(msg.match[1])
+    if users.length == 0
+      for id, user of robot.brain.data.users or { }
+        if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+          users = [user]
+          break
+    if users.length > 0
+      user = users[0]
+      reply = "#{user.name}"
+      if user.email
+        reply += " (who can be emailed at #{user.email}),"
+      reply += " is known as #{user.nickname}, and is in possession of #{user.karma} otterbux. Last I heard, #{user.name} felt #{user.feels}."
+      msg.reply reply
+
+
+  robot.respond /(?:karma|otterbux)(?: for)? (.*)/i, (msg) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
       for id, user of robot.brain.data.users or { }
@@ -204,4 +237,14 @@ module.exports = (robot) ->
       else
         karma = 0
         karma_person.karma = 0
-      msg.reply "#{karma_person.name} has #{karma} karma."
+      msg.reply "#{karma_person.name} has #{karma} otterbux."
+    else
+      key = msg.match[1].replace /(\W+)/g, "_"
+      thingy_data = robot.brain.get("karma_#{key}") or { }
+      if thingy_data.karma
+        karma = thingy_data.karma
+      else
+        karma = 0
+        thingy_data.karma = 0
+        robot.brain.set("karma_#{key}", thingy_data)
+      msg.reply "#{msg.match[1]} has #{karma} otterbux."
