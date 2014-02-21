@@ -214,7 +214,7 @@ module.exports = (robot) ->
       msg.reply reply
 
 
-  robot.respond /(?:karma|otterbux)(?: for)? (.*)/i, (msg) ->
+  robot.hear /^(?:otterbot |otterbot, )?(?:karma|otterbux|bux)(?: for)? (.*)/i, (msg) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
       for id, user of (robot.brain.data.users or { })
