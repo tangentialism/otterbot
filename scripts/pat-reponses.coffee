@@ -160,10 +160,10 @@ module.exports = (robot) ->
   robot.respond /praise (.*)/i, (msg) ->
     praise msg, robot, praises, 1
 
-  robot.respond /(.*)\+\+/i, (msg) ->
+  robot.hear /(.*)\+\+/i, (msg) ->
     praise msg, robot, praises, 1
 
-  robot.respond /(.*)\-\-/i, (msg) ->
+  robot.hear /(.*)\-\-/i, (msg) ->
     praise msg, robot, scolds, -1
 
   robot.respond /scold (.*)/i, (msg) ->
