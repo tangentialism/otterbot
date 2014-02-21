@@ -175,6 +175,11 @@ module.exports = (robot) ->
     for id, people of names
       msg.send "#{people.name} is also known as #{people.nickname}."
 
+  robot.respond /my email is (.*)/i, (msg) ->
+    user = robot.brain.userForId(msg.envelope.user.id)
+    user.email = msg.match[1]
+    msg.reply "Sure is."
+
   robot.hear /(?:\")?(.*)(?:\")? aka (?:\")?(.*)(?:\")?/i, (msg) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length > 0
