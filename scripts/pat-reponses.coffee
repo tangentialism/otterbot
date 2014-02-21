@@ -135,10 +135,10 @@ module.exports = (robot) ->
   robot.respond /thank(s| you)/i, (msg) ->
     msg.reply msg.random you_are_welcomes
 
-  robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? otterbot/i, (msg) ->
+  robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? (?:otterbot|all|everybody|everyone|otters)/i, (msg) ->
     msg.reply msg.random hellos
 
-  robot.hear /^(bye|good evening|good night|goodnight|g'night|night|nightie night),? otterbot/i, (msg) ->
+  robot.hear /^(bye|good evening|good night|goodnight|g'night|night|nightie night),? (?:otterbot|all|everybody|everyone|otters)/i, (msg) ->
     msg.reply msg.random byes
 
   robot.hear /nielsen/i, (msg) ->
@@ -150,7 +150,7 @@ module.exports = (robot) ->
   robot.hear /well done,? otterbot/i, (msg) ->
     msg.reply msg.random thankses
 
-  robot.hear /always left me satisfied and smiling/, (msg) ->
+  robot.hear /always left me satisfied and smiling/i, (msg) ->
     msg.reply msg.random twss
 
   robot.hear /oh,? robot/i, (msg) ->
