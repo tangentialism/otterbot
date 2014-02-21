@@ -26,7 +26,7 @@ you_are_welcomes = [
     "I aim to please.",
     "I do my best."
   ]
-  
+
 thankses = [
     "Thank you.",
     "I appreciate that.",
@@ -52,7 +52,7 @@ byes = [
     "Nightie night.",
     "Hasta la vista."
   ]
-  
+
 helpfuls = [
     "'Sup, buddy?",
     "Oh, you know. Same old.",
@@ -73,6 +73,10 @@ scolds = [
     "Poor form",
     "Badly done",
     "Tsk"
+]
+
+twss = [
+    "That's what she said."
 ]
 
 praise = (msg, robot, responses, seed) ->
@@ -106,11 +110,11 @@ praise = (msg, robot, responses, seed) ->
 module.exports = (robot) ->
   robot.hear /^fuck you,? otterbot/i, (msg) ->
     msg.reply "Fuck you too, buddy."
-  
+
   robot.hear /(love|heart) you/i, (msg) ->
     msg.reply "I love you <3"
 
-  robot.respond /(.*)forever/i, (msg) -> 
+  robot.respond /(.*)forever/i, (msg) ->
     msg.reply "Forever is a very long time. I will see you on the other side of it."
 
   robot.hear /this is(?:.*)hard/i, (msg) ->
@@ -124,40 +128,43 @@ module.exports = (robot) ->
 
   robot.hear /i love you,? otterbot/i, (msg) ->
     msg.reply "I love you too, person."
-    
+
   robot.hear /thank(s| you)?,? otterbot/i, (msg) ->
     msg.reply msg.random you_are_welcomes
-    
+
   robot.respond /thank(s| you)/i, (msg) ->
     msg.reply msg.random you_are_welcomes
-  
+
   robot.hear /^(good morning|hello|hi |morning|mornin\'|howdy),? otterbot/i, (msg) ->
     msg.reply msg.random hellos
-  
+
   robot.hear /^(bye|good evening|good night|goodnight|g'night|night|nightie night),? otterbot/i, (msg) ->
     msg.reply msg.random byes
-    
+
   robot.hear /nielsen/i, (msg) ->
     msg.reply "WE DON'T TALK ABOUT JAKOB NIELSEN HERE I THOUGHT WE AGREED ON THAT."
-    
+
   robot.hear /(good|nice) job,? robot/i, (msg) ->
     msg.reply msg.random thankses
-  
+
   robot.hear /well done,? otterbot/i, (msg) ->
     msg.reply msg.random thankses
-    
+
+  robot.hear /(always left me satisfied and smiling|otterbot, you're the best)/i, (msg) ->
+    msg.reply msg.random twss
+
   robot.hear /oh,? robot/i, (msg) ->
     msg.reply "Oh, you."
 
   robot.hear /(please mandy|mandy please)/i, (msg) ->
     msg.send "MANDY PLEEEEEEEEEEEEEEASE?"
-    
+
   robot.hear /(what's up|sup),? otterbot/i, (msg) ->
     msg.send msg.random helpfuls
-  
+
   robot.respond /'?sup/i, (msg) ->
     msg.send msg.random helpfuls
-    
+
   robot.respond /praise (.*)/i, (msg) ->
     praise msg, robot, praises, 1
 
@@ -169,7 +176,7 @@ module.exports = (robot) ->
 
   robot.respond /scold (.*)/i, (msg) ->
     praise msg, robot, scolds, -1
-    
+
   robot.respond /white pages/i, (msg) ->
     names = robot.brain.data.users
     # names correspond to users
@@ -187,7 +194,7 @@ module.exports = (robot) ->
       users[0].nickname = msg.match[2]
       msg.reply "Let it be known that #{users[0].name} shall also be known as #{msg.match[2]}."
 
-  robot.hear /i am known as (?:\")?(.*)(?:\")?/i, (msg) -> 
+  robot.hear /i am known as (?:\")?(.*)(?:\")?/i, (msg) ->
     user = robot.brain.userForId(msg.envelope.user.id)
     user.nickname = msg.match[1]
     msg.reply "You are now."
