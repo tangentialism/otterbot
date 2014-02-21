@@ -75,6 +75,33 @@ scolds = [
     "Tsk"
 ]
 
+praise = (msg, robot, responses, seed) ->
+  goodjob = msg.random responses
+  if msg.match[1] == 'me'
+    msg.reply "#{goodjob}."
+  else
+    users = robot.brain.usersForFuzzyName(msg.match[1])
+    if users.length == 0
+      for id, user of robot.brain.data.users or { }
+        if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+          users = [user]
+          break
+    if users.length > 0
+      good_person = users[0]
+      if good_person.karma
+        good_person.karma += seed
+      else
+        good_person.karma = seed
+    else
+      key = msg.match[1].replace /(\W+)/g, "_"
+      thingy_data = robot.brain.get("karma_#{key}") or { }
+      if thingy_data.karma
+        thingy_data.karma += seed
+      else
+        thingy_data.karma = seed
+      robot.brain.set("karma_#{key}", thingy_data)
+    msg.send "#{goodjob}, #{msg.match[1]}"
+
 module.exports = (robot) ->
   robot.hear /^fuck you,? otterbot/i, (msg) ->
     msg.reply "Fuck you too, buddy."
@@ -131,59 +158,17 @@ module.exports = (robot) ->
     msg.send msg.random helpfuls
     
   robot.respond /praise (.*)/i, (msg) ->
-    goodjob = msg.random praises
-    if msg.match[1] == 'me'
-      msg.reply "#{goodjob}."
-    else
-      users = robot.brain.usersForFuzzyName(msg.match[1])
-      if users.length == 0
-        for id, user of robot.brain.data.users or { }
-          if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
-            users = [user]
-            break
-      if users.length > 0
-        good_person = users[0]
-        if good_person.karma
-          good_person.karma += 1
-        else
-          good_person.karma = 1
-      else
-        key = msg.match[1].replace /(\W+)/g, "_"
-        thingy_data = robot.brain.get("karma_#{key}") or { }
-        if thingy_data.karma
-          thingy_data.karma += 1
-        else
-          thingy_data.karma = 1
-        robot.brain.set("karma_#{key}", thingy_data)
-      msg.send "#{goodjob}, #{msg.match[1]}"
+    praise msg, robot, praises, 1
+
+  robot.respond /(.*)\+\+/i, (msg) ->
+    praise msg, robot, praises, 1
+
+  robot.respond /(.*)\-\-/i, (msg) ->
+    praise msg, robot, scolds, -1
 
   robot.respond /scold (.*)/i, (msg) ->
-    goodjob = msg.random scolds
-    if msg.match[1] == 'me'
-      msg.reply "#{goodjob}."
-    else
-      users = robot.brain.usersForFuzzyName(msg.match[1])
-      if users.length == 0
-        for id, user of robot.brain.data.users or { }
-          if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
-            users = [user]
-            break
-      if users.length > 0
-        bad_person = users[0]
-        if good_person.karma
-          good_person.karma -= 1
-        else
-          good_person.karma = -1
-      else
-        key = msg.match[1].replace /(\W+)/g, "_"
-        thingy_data = robot.brain.get("karma_#{key}") or { }
-        if thingy_data.karma
-          thingy_data.karma -= 1
-        else
-          thingy_data.karma = -1
-        robot.brain.set("karma_#{key}", thingy_data)
-      msg.send "#{goodjob}, #{msg.match[1]}"
-
+    praise msg, robot, scolds, -1
+    
   robot.respond /white pages/i, (msg) ->
     names = robot.brain.data.users
     # names correspond to users
