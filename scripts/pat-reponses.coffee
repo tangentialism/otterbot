@@ -210,7 +210,7 @@ module.exports = (robot) ->
       reply = "#{user.name}"
       if user.email
         reply += " (who can be emailed at #{user.email}),"
-      reply += " is known as #{nickname}, and is in possession of #{user.karma} otterbux. Last I heard, #{user.name} felt #{user.feels}."
+      reply += " is known as #{user.nickname}, and is in possession of #{user.karma} otterbux. Last I heard, #{user.name} felt #{user.feels}."
       msg.reply reply
 
 
