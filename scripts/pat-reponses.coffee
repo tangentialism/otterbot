@@ -150,7 +150,7 @@ module.exports = (robot) ->
   robot.hear /well done,? otterbot/i, (msg) ->
     msg.reply msg.random thankses
 
-  robot.hear /always left me satisfied and smiling, (msg) ->
+  robot.hear /always left me satisfied and smiling/i, (msg) ->
     msg.reply msg.random twss
 
   robot.hear /oh,? robot/i, (msg) ->
