@@ -217,9 +217,10 @@ module.exports = (robot) ->
     if users.length == 0
       console.log(robot.brain.data.users)
       for id, user of (robot.brain.data.users or { })
-        console.log("Matching #{user.nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
+        nickname = user.nickname or ''
+        console.log("Matching #{nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
         if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
-          console.log("Matched #{user.nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
+          console.log("Matched #{nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
           users = [user]
           break
 
