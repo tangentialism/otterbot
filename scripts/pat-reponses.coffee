@@ -94,7 +94,7 @@ praise = (msg, robot, responses, seed) ->
       else
         good_person.karma = seed
     else
-      key = msg.match[1].replace /(\W+)/g, "_"
+      key = msg.match[1].toLowercase().replace /(\W+)/g, "_"
       thingy_data = robot.brain.get("karma_#{key}") or { }
       if thingy_data.karma
         thingy_data.karma += seed
@@ -232,7 +232,7 @@ module.exports = (robot) ->
         karma_person.karma = 0
       msg.reply "#{karma_person.name} has #{karma} otterbux."
     else
-      key = msg.match[1].replace /(\W+)/g, "_"
+      key = msg.match[1].toLowercase().replace /(\W+)/g, "_"
       thingy_data = robot.brain.get("karma_#{key}") or { }
       if thingy_data.karma
         karma = thingy_data.karma
