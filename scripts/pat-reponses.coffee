@@ -83,7 +83,8 @@ praise = (msg, robot, responses, seed) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
       for id, user of (robot.brain.data.users or { })
-        if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+        nickname = user.nickname or ""
+        if nickname.toLowerCase() == msg.match[1].toLowerCase()
           users = [user]
           break
     if users.length > 0
@@ -200,7 +201,8 @@ module.exports = (robot) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
       for id, user of (robot.brain.data.users or { })
-        if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
+        nickname = user.nickname or ""
+        if nickname.toLowerCase() == msg.match[1].toLowerCase()
           users = [user]
           break
     if users.length > 0
@@ -208,19 +210,16 @@ module.exports = (robot) ->
       reply = "#{user.name}"
       if user.email
         reply += " (who can be emailed at #{user.email}),"
-      reply += " is known as #{user.nickname}, and is in possession of #{user.karma} otterbux. Last I heard, #{user.name} felt #{user.feels}."
+      reply += " is known as #{nickname}, and is in possession of #{user.karma} otterbux. Last I heard, #{user.name} felt #{user.feels}."
       msg.reply reply
 
 
   robot.respond /(?:karma|otterbux)(?: for)? (.*)/i, (msg) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
-      console.log(robot.brain.data.users)
       for id, user of (robot.brain.data.users or { })
         nickname = user.nickname or ''
-        console.log("Matching #{nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
         if nickname.toLowerCase() == msg.match[1].toLowerCase()
-          console.log("Matched #{nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
           users = [user]
           break
 
