@@ -82,7 +82,7 @@ praise = (msg, robot, responses, seed) ->
   else
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
-      for id, user of robot.brain.data.users or { }
+      for id, user of (robot.brain.data.users or { })
         if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
           users = [user]
           break
@@ -199,7 +199,7 @@ module.exports = (robot) ->
     # is it a user
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
-      for id, user of robot.brain.data.users or { }
+      for id, user of (robot.brain.data.users or { })
         if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
           users = [user]
           break
@@ -216,7 +216,7 @@ module.exports = (robot) ->
     users = robot.brain.usersForFuzzyName(msg.match[1])
     if users.length == 0
       console.log(robot.brain.data.users)
-      for id, user of robot.brain.data.users or { }
+      for id, user of (robot.brain.data.users or { })
         console.log("Matching #{user.nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
         if user.nickname.toLowerCase() == msg.match[1].toLowerCase()
           console.log("Matched #{user.nickname.toLowerCase()} and #{msg.match[1].toLowerCase()}")
