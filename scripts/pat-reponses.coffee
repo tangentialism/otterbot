@@ -162,6 +162,9 @@ module.exports = (robot) ->
   robot.hear /(what's up|sup),? otterbot/i, (msg) ->
     msg.send msg.random helpfuls
 
+  robot.hear /robots/i, (msg) ->
+    msg.send "*ahem* robits"
+
   robot.respond /'?sup/i, (msg) ->
     msg.send msg.random helpfuls
 
