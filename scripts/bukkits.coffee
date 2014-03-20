@@ -19,8 +19,8 @@ htmlparser = require "htmlparser"
 Select     = require("soupselect").select
 
 module.exports = (robot) ->
-
   bukkit_bucket = []
+
   bukkits = () ->
     if bukkit_bucket.length == 0
       robot.http("http://bukk.it/")
@@ -30,9 +30,9 @@ module.exports = (robot) ->
             parser.parseComplete(body)
             bukkitz_elementz = Select handler.dom, "tr td a"
             bukkit_bucket = (link.attribs.href for link in bukkitz_elementz)
-            return bukkit_bucket || []
+            return bukkit_bucket
     else
-      return bukkit_bucket || []
+      return bukkit_bucket
 
   bukkits_that_look_like = (word) ->
     reggie = new RegExp(word, "i");
