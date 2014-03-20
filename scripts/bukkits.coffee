@@ -45,9 +45,14 @@ module.exports = (robot) ->
       # Let's look for something... *special*
       term = msg.match[1].replace(/\s+/, '')
       my_bukkit = msg.random bukkits_that_look_like(term)
+      if my_bukkit
+        msg.send "http://bukk.it/#{my_bukkit}"
+      else
+        msg.reply "There is a curious void in the bukk.it for “#{term}”"
     else
       my_bukkit = msg.random bukkits()
+      msg.send "http://bukk.it/#{my_bukkit}"
+      
 
-    msg.send "http://bukk.it/#{my_bukkit}"
 
           
