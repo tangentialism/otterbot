@@ -2,7 +2,8 @@
 #   gets random bukkit
 #
 # Dependencies:
-#   None
+#   "htmlparser": "1.7.6"
+#   "soupselect: "0.2.0"
 #
 # Configuration:
 #   None
@@ -13,13 +14,40 @@
 # Author:
 #   David Yee
 #
-module.exports = (robot) ->
-  robot.respond /bukkit( \w+)?$/i, (msg) ->
-   bukkit_url = "http://bukkit.tangentialism.com"
-   if msg.match[1]
-     term = msg.match[1].replace(/\s+/, '')
-     bukkit_url += "/#{term}"
-   robot.http(bukkit_url)
-    .get() (err, res, body) ->
-      msg.send res.headers.location
 
+htmlparser = require "htmlparser"
+Select     = require("soupselect").select
+
+module.exports = (robot) ->
+
+  bukkit_bucket = []
+  bukkits = () ->
+    if bukkit_bucket.length == 0
+      robot.http("http://bukk.it/")
+          .get() (err, res, body) ->
+            handler = new htmlparser.DefaultHandler()
+            parser = new htmlparser.Parser(handler)
+            parser.parseComplete(body)
+            bukkitz_elementz = Select handler.dom, "tr td a"
+            bukkit_bucket = (link.attribs.href for link in bukkitz_elementz)
+            return bukkit_bucket || []
+    else
+      return bukkit_bucket || []
+
+  bukkits_that_look_like = (word) ->
+    reggie = new RegExp(word, "i");
+    return bukkits().filter (x) -> x.match(reggie)
+
+  bukkits()
+
+  robot.respond /bukkit( \w+)?$/i, (msg) ->
+    if msg.match[1]
+      # Let's look for something... *special*
+      term = msg.match[1].replace(/\s+/, '')
+      my_bukkit = msg.random bukkits_that_look_like(term)
+    else
+      my_bukkit = msg.random bukkits()
+
+    msg.send "http://bukk.it/#{my_bukkit}"
+
+          
