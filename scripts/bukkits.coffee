@@ -85,3 +85,8 @@ module.exports = (robot) ->
   else
     robot.respond /bukkit( \w+)?(?: from (\w+))?$/i, (msg) ->
       fetch_me_a_bukkit(msg)
+
+  robot.respond /reload bukkits/i, (msg) ->
+    bukkit_bucket = []
+    bukkits()
+    msg.reply "All thy bukkits have been reloaded."
