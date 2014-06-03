@@ -62,7 +62,7 @@ module.exports = (robot) ->
   giffize_url = (result) ->
     return "#{sources[result[1]]}#{result[0]}"
 
-  fetch_me_a_bukkit = (msg) ->
+  fetch_me_a_bukkit = (msg, all) ->
     if msg.match[1]
       source = msg.match[2] if msg.match[2]
       # Let's look for something... *special*

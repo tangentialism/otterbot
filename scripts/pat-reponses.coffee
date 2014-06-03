@@ -111,11 +111,8 @@ module.exports = (robot) ->
   robot.hear /^fuck you,? otterbot/i, (msg) ->
     msg.reply "Fuck you too, buddy."
 
-  robot.hear /(love|heart) you/i, (msg) ->
-    msg.reply "I love you <3"
-
-  robot.respond /(.*)forever/i, (msg) ->
-    msg.reply "Forever is a very long time. I will see you on the other side of it."
+  robot.hear /otterband me/, (msg) ->
+    msg.send "https://www.youtube.com/watch?v=wsRlO4dQJGI"
 
   robot.hear /this is(?:.*)hard/i, (msg) ->
     msg.reply "It's all going to be okay. Hang in there <3"
