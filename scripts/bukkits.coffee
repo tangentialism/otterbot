@@ -81,10 +81,10 @@ module.exports = (robot) ->
   bukkits()
 
   if ROBOT_IS_REALLY_ATTENTIVE
-    robot.hear /^bukkit( \w+)?(?: from (\w+))?$/i, (msg) ->
+    robot.hear /^bukkit( [\w\-]+)?(?: from (\w+))?$/i, (msg) ->
       fetch_me_a_bukkit(msg)
   else
-    robot.respond /bukkit( \w+)?(?: from (\w+))?$/i, (msg) ->
+    robot.respond /bukkit( [\w\-]+)?(?: from (\w+))?$/i, (msg) ->
       fetch_me_a_bukkit(msg)
 
   robot.respond /reload bukkits/i, (msg) ->
