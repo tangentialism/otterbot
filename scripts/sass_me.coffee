@@ -2,7 +2,7 @@
 #   Get sassy.
 #
 # Commands:
-#   hubot sass me <phrase> - Get some sass
+#   hubot sass me <three word phrase / or / three phrases> - Get some sass
 #
 
 module.exports = (robot) ->
