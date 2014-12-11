@@ -64,11 +64,15 @@ cumberbatches = [
     "CULPABILITY",
     "CAMBOZOLA",
     "CHRONOTRIGGER",
-    "CLAMBAKE"
-    "STACKEXCHANGE"
-    "CRUMBLECAKE"
-    "DUMBLEDORE"
-    "CARROTCAKE"
+    "CLAMBAKE",
+    "STACKEXCHANGE",
+    "CRUMBLECAKE",
+    "DUMBLEDORE",
+    "CARROTCAKE",
+    "CHAMBERPOT",
+    "COFFEEPOT",
+    "CLINKERFUZZ",
+    "CLOISTERFARM"
   ]
   
 module.exports = (robot) ->
