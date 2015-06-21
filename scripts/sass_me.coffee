@@ -34,3 +34,11 @@ module.exports = (robot) ->
 ```
 """
       msg.send(output)
+
+  robot.respond /sign me (.*)$/i, (msg) ->
+    query = msg.match[1]
+    sassy_phrase = query.split(/\s+/)
+    lengths = Math.max.apply(Math, (el.length for el in sassy_phrase))
+    msg.send JSON.stringify(lengths)
+    # max_length = , lengths)
+    # msg.send(max_length)
