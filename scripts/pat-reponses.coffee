@@ -75,10 +75,6 @@ scolds = [
     "Tsk"
 ]
 
-twss = [
-    "That's what she said."
-]
-
 praise = (msg, robot, responses, seed) ->
   goodjob = msg.random responses
   if msg.match[1] == 'me'
@@ -146,9 +142,6 @@ module.exports = (robot) ->
 
   robot.hear /well done,? otterbot/i, (msg) ->
     msg.reply msg.random thankses
-
-  robot.hear /(always left me satisfied and smiling|you.re the best)/i, (msg) ->
-    msg.reply msg.random twss
 
   robot.hear /oh,? robot/i, (msg) ->
     msg.reply "Oh, you."
