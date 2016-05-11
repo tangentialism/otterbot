@@ -28,7 +28,7 @@ module.exports = (robot) ->
   sources = {
     'bukkit': 'http://bukk.it/',
     'misatkes': 'http://misatkes.com/',
-    'floops': 'http://floops.io/',
+    'floops': 'http://floop.me/',
     'giflimo': 'http://gif.limo/'
   }
 
