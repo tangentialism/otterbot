@@ -32,7 +32,6 @@ benedicts = [
     "BEERSANDWICH",
     "BALACLAVA",
     "BALTHAZAR",
-    "BALACLAVA",
     "BARCALOUNGER"
     "BARNDOOR"
     "BENELUX"
@@ -46,7 +45,6 @@ benedicts = [
     "BLUNDERBUSS"
     "BUMBLEBEE"
     "BAGFRITOS"
-    "BENELUX"
     "BERNIEDICT"
   ]
   
