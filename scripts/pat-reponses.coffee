@@ -68,6 +68,15 @@ praises = [
     "Well done"
   ]
 
+puns = [
+    "This is otterly delicious",
+    "You otter me kidding me",
+    "The otter guys",
+    "You're otter your mind",
+    "significant otter",
+    "otter devastation"
+  ]
+
 scolds = [
     "Boo on you",
     "Poor form",
@@ -160,6 +169,9 @@ module.exports = (robot) ->
 
   robot.respond /praise (.*)/i, (msg) ->
     praise msg, robot, praises, 1
+
+  robot.respond /pun me (.*)/i, (msg) ->
+    praise msg, robot, otterpuns, 1
 
   robot.hear /(.*)\+\+/i, (msg) ->
     praise msg, robot, praises, 1
